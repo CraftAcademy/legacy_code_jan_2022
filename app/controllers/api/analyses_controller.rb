@@ -19,6 +19,7 @@ class Api::AnalysesController < ApplicationController
   def analysis_params
     params.require(:analysis).permit!
   end
+  
 
   def analyze_resource
     resource = analysis_params[:resource]
