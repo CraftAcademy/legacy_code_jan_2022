@@ -19,7 +19,6 @@ class Api::AnalysesController < ApplicationController
   def analysis_params
     params.require(:analysis).permit!
   end
-  
 
   def analyze_resource
     resource = analysis_params[:resource]
@@ -45,5 +44,18 @@ class Api::AnalysesController < ApplicationController
 
   def analysis_category
     analysis_params[:category].to_sym
+  end
+
+  def validate_params_presence
+    if params[:category].nil? && params[:resource].nil?
+      render json: {
+        message: 'Missing category and resource params'
+      },
+             status: 422
+    elsif params[:category].nil?
+      render json: { message: 'Missing category param' }, status: 422
+    else
+      render json: { message: 'Missing resource param' }, status: 422
+    end
   end
 end

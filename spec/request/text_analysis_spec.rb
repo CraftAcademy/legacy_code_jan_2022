@@ -16,7 +16,7 @@ RSpec.describe Api::AnalysesController, type: :request do
       end
 
       it 'is expected to return a degree of certainty with results' do
-        expect(eval(JSON.parse(response.body)['results']['classifications'])[0]['confidence']).to be_within(0.5).of(0.5)
+        expect(eval(JSON.parse(response.body)['results']['classifications'])[0]['confidence']).to be_within(0.5).of(1.0)
       end
     end
 
@@ -31,5 +31,13 @@ RSpec.describe Api::AnalysesController, type: :request do
         expect(JSON.parse(response.body)['results']['external_id']).to eq nil
       end
     end
+
+describe 'with category param missing' do
+    before { post '/api/analyses', params: {} }
+      it 'is expected to respond with status 422' do
+        binding.pry
+      end
+    end
   end
 end
+
